@@ -217,6 +217,12 @@ search PROC
 	call  writeString
 	call	CrLf
     jmp  done
+    
+    notFOUND:
+    lea   edx, msgNumNotFound 
+	call  writeString
+	call	CrLf
+    jmp  done
    
     done:
     ret
