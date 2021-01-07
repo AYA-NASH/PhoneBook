@@ -200,6 +200,13 @@ search PROC
     
     mov ESI , edx
     lea EDI , array
+    
+    check:
+        mov eax, [esi] ;copy the 4 bytes in ax
+	mov ebx, [edi]
+	cmp eax, ebx   ;compare the two bytes
+	jne notFOUND   ;if not (ah==al)
+        jmp check  ;else jump to ceck next byte
 
     done:
     ret
