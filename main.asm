@@ -29,7 +29,9 @@ includelib y:\masm32\lib\user32.lib
     
 buffer BYTE 21 DUP(0)          ; input buffer
 byteCount DWORD ?              ; holds counter
-      
+
+str2  DWORD "12",0 ;to store the input number
+numToSearch byte "Enter The Number",0 ;message displayed to prompt     
 
 
 
@@ -183,8 +185,13 @@ print ENDP
 
 search PROC
 
-;code_to_search
- 
+    lea   edx, numToSearch    ; mov edx, offset numToSearch
+	call  writeString
+	call	CrLf
+    lea edx , str2
+    mov ecx, 32 
+    call readString           ;EDX has the offset , EAX has no. of chars
+    
 
     done:
     ret
