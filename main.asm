@@ -212,6 +212,12 @@ search PROC
 	jz FOUND   ;if count=0 the strings are same
         jmp check  ;else jump to ceck next byte
 
+    FOUND:
+    lea   edx, msgNumFound 
+	call  writeString
+	call	CrLf
+    jmp  done
+   
     done:
     ret
 search ENDP
