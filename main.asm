@@ -182,7 +182,23 @@ print PROC
 print ENDP
 
 
-
+charToArr PROC
+pop str2
+ulang1:
+    mov ebx,0
+    mov EAX , str2 [ebx]
+    mov strArr[ebx] , EAX
+    inc ebx
+    cmp dl,'$'
+    jne ulang1
+    mov ah,2
+    mov edx,offset strArr
+    int 21h
+    int 20h
+    
+    done:
+    ret
+charToArr ENDP
 search PROC
 
     lea   edx, numToSearch    ; mov edx, offset numToSearch
