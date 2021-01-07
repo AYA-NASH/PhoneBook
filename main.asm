@@ -207,7 +207,10 @@ search PROC
     lea edx , str2
     mov ecx, 32 
     call readString           ;EDX has the offset , EAX has no. of chars
-    
+    push str2
+    call charToArr
+
+    ; edx = strArr offset
 
     done:
     ret
