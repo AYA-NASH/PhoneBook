@@ -8,7 +8,7 @@ includelib y:\masm32\lib\user32.lib
        aName BYTE 51 DUP (?)
     arrayptr    DWORD OFFSET array
     array       BYTE 4096 DUP (?)
-    mes1        BYTE 10, "1-add number 2-display all numbers 3-remove a number 4-search for a number 5-quit", 0
+    mes1        BYTE 10, "1-add number 2-display all numbers 3-remove a number 4-search for a number 5-search for a name 6-quit", 0
     check byte 0,0
     ;mes1        BYTE 10, "press 1 to add an element, 2 to print, 3 to quit    ", 0
     yourName  byte "Name :  ",0
@@ -247,7 +247,7 @@ start:
     je print2
     cmp eax, 4
     je search2
-    cmp eax, 5
+    cmp eax, 6
     je stop
     jmp next                    ; This was missing in the OP
 
