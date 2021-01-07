@@ -206,6 +206,10 @@ search PROC
 	mov ebx, [edi]
 	cmp eax, ebx   ;compare the two bytes
 	jne notFOUND   ;if not (ah==al)
+	inc esi       ;increment the 4 bytes
+	inc edi
+	dec ecx      ;decrement the count(string length)
+	jz FOUND   ;if count=0 the strings are same
         jmp check  ;else jump to ceck next byte
 
     done:
