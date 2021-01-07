@@ -113,18 +113,6 @@ readin ENDP
 
 
 
-
-
-
-
-
-
-
-
-
-
-    
-
 print_name PROC
     
     done:
@@ -208,16 +196,14 @@ search PROC
     mov ecx, 32 
     call readString           ;EDX has the offset , EAX has no. of chars
     push str2
-    call charToArr
-
-    ; edx = strArr offset
+    call charToArr            ; edx = strArr offset
+    
+    mov ESI , edx
+    lea EDI , array
 
     done:
     ret
 search ENDP
-
-
-
 
 
 
