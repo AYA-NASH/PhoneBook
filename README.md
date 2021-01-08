@@ -38,8 +38,8 @@ First when you run the project we get the massage on screen to choose the number
     cmp   maxNum , 3
             je    maxNumFunc
             lea   edx, mesToTakeNumber
-	           call  writeString
-	           call	CrLf
+	    call  writeString
+	    call  CrLf
             mov edx, arrayptr           ; Argument for ReadString: Pointer to memory
             mov ecx, 15                 ; Argument for ReadString: maximal number of chars
             call ReadString             ; Doesn't change EDX
