@@ -7,6 +7,7 @@ phonebook(directory) do Five operations:
 * search
 * quit
  
+ 
  ## Installation
  we use Irvine32: A library for assembly language, That is use to simplify tasks related to input-output and string handling in assembly language programming.
  ```
@@ -15,3 +16,8 @@ includelib c:\Irvine\irvine32.lib
 includelib c:\Irvine\kernel32.lib
 includelib y:\masm32\lib\user32.lib
 ```
+
+
+## usage
+First when you run the project we get the massage on screen to choose the number of operation you need to do 
+![first massage](https://github.com/AYA-NASH/PhoneBook/blob/main/intel-8086/first%20massage0.PNG?raw=true)
