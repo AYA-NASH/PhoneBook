@@ -35,7 +35,7 @@ First when you run the project we get the massage on screen to choose the number
    ```    
   Then Allow to user to Enter its number,for each user three number to Enter (for each number max contain 15 character)
     ```
-    cmp   maxNum , 3
+            cmp   maxNum , 3
             je    maxNumFunc
             lea   edx, mesToTakeNumber
 	    call  writeString
@@ -45,7 +45,7 @@ First when you run the project we get the massage on screen to choose the number
             call ReadString             ; Doesn't change EDX
             inc     maxNum
             test eax, eax               ; EAX == 0 (got no string)
-	    ```
+    ```
     ![add massage](https://github.com/AYA-NASH/PhoneBook/blob/main/intel-8086/add.PNG)
     
   
