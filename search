@@ -207,7 +207,7 @@ search PROC
         xor edx ,edx
         xor ebx ,ebx
         xor ecx ,ecx
-
+        
         mov ecx , edx
         lea edx , yourName
         call writestring
@@ -215,6 +215,7 @@ search PROC
             mov eax , offset array
         compare_string:
             mov ebx , offset contacts
+            
             ;call	CrLf
             mov cl , BYTE PTR [ebx]
             cmp BYTE PTR [eax], cl       ; Terminating null?
@@ -273,7 +274,7 @@ search PROC
 
     done:
 		call	CrLf
-		exit	
+		ret	
 
 
 
@@ -298,7 +299,13 @@ main PROC
 
 
 
-start:
+
+
+
+
+
+
+    start:
     
     lea edx, mes1
     call WriteString
@@ -331,6 +338,13 @@ print2:
 
 
 search2:
+    mov cx,15
+    mov edx , offset contacts
+
+myloop:
+ 
+    mov contactsPtr , offset contacts
+
     call search
     jmp next                    ; Just a better name than in the OP
 
