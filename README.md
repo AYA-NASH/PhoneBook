@@ -45,8 +45,13 @@ First when you run the project we get the massage on screen to choose the number
             call ReadString             ; Doesn't change EDX
             inc     maxNum
             test eax, eax               ; EAX == 0 (got no string)
-    ```
-    ![add massage](https://github.com/AYA-NASH/PhoneBook/blob/main/intel-8086/add.PNG)
+	    ```
+
+
+
+
+
+![add massage](https://github.com/AYA-NASH/PhoneBook/blob/main/intel-8086/add.PNG)
     
   
   
