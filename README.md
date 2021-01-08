@@ -21,3 +21,31 @@ includelib y:\masm32\lib\user32.lib
 ## usage
 First when you run the project we get the massage on screen to choose the number of operation you need to do 
 ![first massage](https://github.com/AYA-NASH/PhoneBook/blob/main/intel-8086/first%20massage0.PNG?raw=true)
+
+   #### Add
+   Allow to user to Enter its Name (the max contain 20 character )
+   ```
+    mov edx, arrayptr           ; Argument for ReadString: Pointer to memory
+    mov ecx, 20                 ; Argument for ReadString: maximal number of chars
+    call ReadString             ; Doesn't change EDX
+    test eax, eax               ; EAX == 0 (got no string)
+    jz zero_name                ; Yes: don't store a new arrayptr
+    lea edx, [edx+eax+1]        ; EDX += EAX + 1
+    mov arrayptr, edx           ; New pointer, points to the byte where the next string should begin
+    ```
+    then Allow to user to Enter its number,for each user three number to Enter (for each number max contain 15 character)
+    ```
+    cmp   maxNum , 3
+            je    maxNumFunc
+            lea   edx, mesToTakeNumber
+	           call  writeString
+	           call	CrLf
+            mov edx, arrayptr           ; Argument for ReadString: Pointer to memory
+            mov ecx, 15                 ; Argument for ReadString: maximal number of chars
+            call ReadString             ; Doesn't change EDX
+            inc     maxNum
+            test eax, eax               ; EAX == 0 (got no string)
+    ```
+    ![add massage](https://github.com/AYA-NASH/PhoneBook/blob/main/intel-8086/add.PNG)
+   
+  
