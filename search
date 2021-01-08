@@ -189,7 +189,7 @@ print ENDP
 search PROC
         mov check,0
         mov index , 0
-        lea   edx, mesToTakeNumber
+        lea   edx, mesToTakeName
 	    call  writeString
 	    call	CrLf
         mov edx, contactsPtr           ; Argument for ReadString: Pointer to memory
@@ -208,7 +208,10 @@ search PROC
         xor ebx ,ebx
         xor ecx ,ecx
 
-
+        mov ecx , edx
+        lea edx , yourName
+        call writestring
+        mov edx , ecx
             mov eax , offset array
         compare_string:
             mov ebx , offset contacts
@@ -225,12 +228,18 @@ search PROC
             inc eax                     ; Pointer to next string
             jmp compare_string
             okay_print:
+
             xor edx , edx
             mov edx , eax
             call writestring
+
             ;inc eax                     ; Pointer to next string
             call	CrLf
-
+            
+        mov ecx , edx
+        lea edx , number
+        call writestring
+        mov edx , ecx
            scan_for_null2:
             inc edx                     ; Pointer to next string
             cmp BYTE PTR [edx], 0       ; Terminating null?
@@ -239,6 +248,10 @@ search PROC
             call writestring
             		call	CrLf
 
+        mov ecx , edx
+        lea edx , number
+        call writestring
+        mov edx , ecx
            scan_for_null3:
             inc edx                     ; Pointer to next string
             cmp BYTE PTR [edx], 0       ; Terminating null?
@@ -247,6 +260,10 @@ search PROC
             call writestring
             		call	CrLf
 
+        mov ecx , edx
+        lea edx , number
+        call writestring
+        mov edx , ecx
            scan_for_null4:
             inc edx                     ; Pointer to next string
             cmp BYTE PTR [edx], 0       ; Terminating null?
