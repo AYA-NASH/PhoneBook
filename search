@@ -204,6 +204,10 @@ search PROC
         mov indexWeAt,0
         mov indexWeAt2,0
         mov index,0
+        xor edx ,edx
+        xor ebx ,ebx
+        xor ecx ,ecx
+
 
             mov eax , offset array
         compare_string:
@@ -212,6 +216,8 @@ search PROC
             mov cl , BYTE PTR [ebx]
             cmp BYTE PTR [eax], cl       ; Terminating null?
             je okay_print
+            cmp eax, arrayptr           
+            jae done                    
             scan_for_null:
             inc eax                     ; Pointer to next string
             cmp BYTE PTR [eax], 0       ; Terminating null?
@@ -223,7 +229,7 @@ search PROC
             mov edx , eax
             call writestring
             ;inc eax                     ; Pointer to next string
-            		call	CrLf
+            call	CrLf
 
            scan_for_null2:
             inc edx                     ; Pointer to next string
@@ -250,7 +256,7 @@ search PROC
 
     done:
 		call	CrLf
-		ret	
+		exit	
 
 
 
