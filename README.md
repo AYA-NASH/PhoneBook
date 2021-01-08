@@ -32,7 +32,7 @@ First when you run the project we get the massage on screen to choose the number
     jz zero_name                ; Yes: don't store a new arrayptr
     lea edx, [edx+eax+1]        ; EDX += EAX + 1
     mov arrayptr, edx           ; New pointer, points to the byte where the next string should begin
-```    
+   ```    
   Then Allow to user to Enter its number,for each user three number to Enter (for each number max contain 15 character)
     ```
     cmp   maxNum , 3
@@ -45,7 +45,7 @@ First when you run the project we get the massage on screen to choose the number
             call ReadString             ; Doesn't change EDX
             inc     maxNum
             test eax, eax               ; EAX == 0 (got no string)
-            ```
+	    ```
     ![add massage](https://github.com/AYA-NASH/PhoneBook/blob/main/intel-8086/add.PNG)
     
   
