@@ -139,18 +139,6 @@ delete PROC
         jz done                     ; Yes: don't store a new arrayptr
         mov esi,eax
         lea edx, [edx+eax+1]        ; EDX += EAX + 1
-        mov contactsPtr, edx           ; New pointer, points to the byte where the next string should begin
-        mov indexWeAt,0
-        mov indexWeAt2,0
-        mov index,0
-        xor edx ,edx
-        xor ebx ,ebx
-        xor ecx ,ecx
-        mov ecx , edx
-        mov edx , ecx
-            mov eax , offset array
-            ;dec eax
-            mov edi , offset contacts
     
 
     done:
