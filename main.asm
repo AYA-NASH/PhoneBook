@@ -260,12 +260,52 @@ search PROC
             sub eax , ecx
             inc eax
             xor edx , edx
-            mov edx , eax
+            mov edx , eax                ;=========>>>>>> edx holds Name Index in the array
             call writestring
 
             ;inc eax                     ; Pointer to next string
             call	CrLf
-           
+            
+        mov ecx , edx
+        lea edx , number
+        call writestring
+        mov edx , ecx
+           scan_for_null2:
+            inc edx                     ; Pointer to next string
+            cmp BYTE PTR [edx], 0       ; Terminating null?
+            jne scan_for_null2           ; no -> next character
+            inc edx                     ; Pointer to next string
+            call writestring		 ;=========>>>>>> edx holds first Number Index in the array
+            		call	CrLf
+
+        mov ecx , edx
+        lea edx , number
+        call writestring
+        mov edx , ecx
+           scan_for_null3:
+            inc edx                     ; Pointer to next string
+            cmp BYTE PTR [edx], 0       ; Terminating null?
+            jne scan_for_null3           ; no -> next character
+            inc edx                     ; Pointer to next string
+            call writestring		;=========>>>>>> edx holds second Number Index in the array
+            		call	CrLf
+
+        mov ecx , edx
+        lea edx , number
+        call writestring
+        mov edx , ecx
+           scan_for_null4:
+            inc edx                     ; Pointer to next string
+            cmp BYTE PTR [edx], 0       ; Terminating null?
+            jne scan_for_null4           ; no -> next character
+            inc edx                     ; Pointer to next string
+            call writestring		;=========>>>>>> edx holds third Number Index in the array
+            jmp done
+
+        double_check:
+            inc edi
+            inc eax
+            jmp compare_string
 
     done:
 		call	CrLf
@@ -274,7 +314,6 @@ search PROC
 
 
 search ENDP
-
 
 
 
