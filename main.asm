@@ -126,19 +126,7 @@ readin ENDP
 
 
 delete PROC
-        mov check,0
-        mov index , 0
-        lea   edx, mesToTakeName
-	    call  writeString
-	    call	CrLf
-        mov edx, contactsPtr           ; Argument for ReadString: Pointer to memory
-        mov ecx, 15                 ; Argument for ReadString: maximal number of chars
-        call ReadString             ; Doesn't change EDX
-        inc     maxNum
-        test eax, eax               ; EAX == 0 (got no string)
-        jz done                     ; Yes: don't store a new arrayptr
-        mov esi,eax
-        lea edx, [edx+eax+1]        ; EDX += EAX + 1
+     
     
 
     done:
@@ -156,7 +144,6 @@ print_name PROC
     done:
     ret
 print_name ENDP
-
 
 
 
