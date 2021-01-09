@@ -250,6 +250,21 @@ search PROC
             inc eax                     ; Pointer to next string
             cmp BYTE PTR [eax], 0       ; Terminating null?
             jne scan_for_null           ; no -> next character
+            inc eax                     ; Pointer to next string
+            jmp compare_string
+            okay_print:
+            inc index
+            mov ecx , esi
+            cmp index , cl
+            jne double_check
+            sub eax , ecx
+            inc eax
+            xor edx , edx
+            mov edx , eax
+            call writestring
+
+            ;inc eax                     ; Pointer to next string
+            call	CrLf
            
 
     done:
