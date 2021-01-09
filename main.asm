@@ -8,7 +8,7 @@ includelib y:\masm32\lib\user32.lib
        aName BYTE 51 DUP (?)
     arrayptr    DWORD OFFSET array
     array       BYTE 4096 DUP (?)
-    mes1        BYTE 10, "1-add number 2-display all numbers 3-remove a number 4-search for a number 5-search for a name 6-quit", 0
+    mes1        BYTE 10, "1-add number 2-display all numbers 3-remove a number 4-search for a number 5-quit", 0
     check byte 0,0
     ;mes1        BYTE 10, "press 1 to add an element, 2 to print, 3 to quit    ", 0
     yourName  byte "Name :  ",0
@@ -18,20 +18,21 @@ includelib y:\masm32\lib\user32.lib
     mesToTakeNumber byte "Enter Your Number : ",0
     msgMoreNumber byte "More Numbers? (y) or (n)",0
     maxNum byte 0,0
-    zeros  byte 0,0
-    eqaa byte "++",0
-    searchInput dword 0,0
-    nameSize dd ?
-    contacts DWORD 100 DUP(?);array of conects
+    indexWeAt DWORD 0,0
+    indexWeAt2 DWORD 0,0
 
+    zeros  byte "-",0
+    eqaa byte "+",0
+    searchInput dword 0,0
+    nameSize byte ?
+    contacts word 1000 DUP(?);array of conects
+    contactsPtr DWORD OFFSET contacts
     index byte ?
 
     
 buffer BYTE 21 DUP(0)          ; input buffer
 byteCount DWORD ?              ; holds counter
-
-str2  DWORD "12",0 ;to store the input number
-numToSearch byte "Enter The Number",0 ;message displayed to prompt     
+      
 
 
 
@@ -55,36 +56,36 @@ readin PROC
     jz zero_name                     ; Yes: don't store a new arrayptr
     lea edx, [edx+eax+1]        ; EDX += EAX + 1
     mov arrayptr, edx           ; New pointer, points to the byte where the next string should begin
-        take_number:
-            cmp   maxNum , 3
-            je    maxNumFunc
-            lea   edx, mesToTakeNumber
-	        call  writeString
-	        call	CrLf
-            mov edx, arrayptr           ; Argument for ReadString: Pointer to memory
-            mov ecx, 15                 ; Argument for ReadString: maximal number of chars
-            call ReadString             ; Doesn't change EDX
-            inc     maxNum
-            test eax, eax               ; EAX == 0 (got no string)
-            jz filling                     ; Yes: don't store a new arrayptr
-            lea edx, [edx+eax+1]        ; EDX += EAX + 1
-            mov arrayptr, edx           ; New pointer, points to the byte where the next string should begin
-            lea edx, msgMoreNumber
-			call writestring
-			call	CrLf
-			call readchar
-			mov check , al
-			cmp check , 79h
-			je  take_number
-            cmp   maxNum , 3
-            jne    filling
-            jmp done
+    take_number:
+        cmp   maxNum , 3
+        je    maxNumFunc
+        lea   edx, mesToTakeNumber
+	    call  writeString
+	    call	CrLf
+        mov edx, arrayptr           ; Argument for ReadString: Pointer to memory
+        mov ecx, 15                 ; Argument for ReadString: maximal number of chars
+        call ReadString             ; Doesn't change EDX
+        inc     maxNum
+        test eax, eax               ; EAX == 0 (got no string)
+        jz filling                     ; Yes: don't store a new arrayptr
+        lea edx, [edx+eax+1]        ; EDX += EAX + 1
+        mov arrayptr, edx           ; New pointer, points to the byte where the next string should begin
+        lea edx, msgMoreNumber
+		call writestring
+		call	CrLf
+		call readchar
+		mov check , al
+		cmp check , 79h
+		je  take_number
+        cmp   maxNum , 3
+        jne    filling
+        jmp done
  
  filling: 
              mov edx, arrayptr           ; Argument for ReadString: Pointer to memory
             mov ecx, 1                 ; Argument for ReadString: maximal number of 
-            mov ecx, 15                 ; Argument for ReadString: maximal number of chars
-            mov al , zeros
+            ;mov ecx, 15                 ; Argument for ReadString: maximal number of chars
+            mov al , zeros ; zero => "-"
             mov  [edx], al
             inc     maxNum
             lea edx, [edx+1+1]        ; EDX += EAX + 1
@@ -93,6 +94,7 @@ readin PROC
              jne    filling
              jmp done
 maxNumFunc:
+	        call	CrLf
             lea   edx, mesToMaxNumber
 	        call  writeString
 	        call	CrLf
@@ -113,6 +115,18 @@ readin ENDP
 
 
 
+
+
+
+
+
+
+
+
+
+
+    
+
 print_name PROC
     
     done:
@@ -125,6 +139,8 @@ print_name ENDP
 
 
 print PROC
+mov indexWeAt , 0
+    mov index,0
     lea edx, array              ; Points to the first string
     L1:
     cmp edx, arrayptr           ; Does it point beyond the strings?
@@ -138,6 +154,8 @@ print PROC
     je name_print
     jg number_print
     name_print:
+    cmp byte ptr [edx] , '='
+    je scan_to_remove
     mov eax , edx
     lea edx,yourName
     call writeString
@@ -146,14 +164,16 @@ print PROC
     call Crlf  
     jmp scan_for_null
     number_print:
-     mov eax , edx
+     cmp byte ptr [edx] , '='
+    je scan_to_remove
+    mov eax , edx
     lea edx,number
     call writeString
     mov edx,eax
     call WriteString            ; Doesn't change EDX
     call Crlf                   ; Doesn't change EDX
     scan_for_null:
-    inc edx
+    inc edx                     ; Pointer to next string
     cmp BYTE PTR [edx], 0       ; Terminating null?
     jne scan_for_null           ; no -> next character
     inc edx                     ; Pointer to next string
@@ -165,68 +185,104 @@ print PROC
     mov index,0
     jmp L1
 
+scan_to_remove:
+       inc indexWeAt
+       jmp scan_for_null
+
+
     done:
     ret
 print ENDP
 
 
-charToArr PROC
-pop str2
-ulang1:
-    mov ebx,0
-    mov EAX , str2 [ebx]
-    mov strArr[ebx] , EAX
-    inc ebx
-    cmp dl,'$'
-    jne ulang1
-    mov ah,2
-    mov edx,offset strArr
-    int 21h
-    int 20h
-    
-    done:
-    ret
-charToArr ENDP
+
+
+
+
+
+
+
+
+
+
+
+
+
 search PROC
+        mov check,0
+        mov index , 0
+        lea   edx, mesToTakeName
+	    call  writeString
+	    call	CrLf
+        mov edx, contactsPtr           ; Argument for ReadString: Pointer to memory
+        mov ecx, 15                 ; Argument for ReadString: maximal number of chars
+        call ReadString             ; Doesn't change EDX
+        inc     maxNum
+        test eax, eax               ; EAX == 0 (got no string)
+        jz done                     ; Yes: don't store a new arrayptr
+        mov esi,eax
+        lea edx, [edx+eax+1]        ; EDX += EAX + 1
+        mov contactsPtr, edx           ; New pointer, points to the byte where the next string should begin
+        mov indexWeAt,0
+        mov indexWeAt2,0
+        mov index,0
+        xor edx ,edx
+        xor ebx ,ebx
+        xor ecx ,ecx
+        mov ecx , edx
+        lea edx , yourName
+        call writestring
+        mov edx , ecx
+            mov eax , offset array
+            ;dec eax
+            mov edi , offset contacts
+        compare_string:
+            mov ebx , edi
+            ;call	CrLf
+            mov cl , BYTE PTR [ebx]
+            cmp BYTE PTR [eax], cl       ; Terminating null?
+            je okay_print
+            mov index , 0
+            cmp eax, arrayptr           
+            jae done                    
+            scan_for_null:
+            mov edi , offset contacts
+            inc eax                     ; Pointer to next string
+            cmp BYTE PTR [eax], 0       ; Terminating null?
+            jne scan_for_null           ; no -> next character
+           
 
-    lea   edx, numToSearch    ; mov edx, offset numToSearch
-	call  writeString
-	call	CrLf
-    lea edx , str2
-    mov ecx, 32 
-    call readString           ;EDX has the offset , EAX has no. of chars
-    push str2
-    call charToArr            ; edx = strArr offset
-    
-    mov ESI , edx
-    lea EDI , array
-    
-    check:
-        mov eax, [esi] ;copy the 4 bytes in ax
-	mov ebx, [edi]
-	cmp eax, ebx   ;compare the two bytes
-	jne notFOUND   ;if not (ah==al)
-	inc esi       ;increment the 4 bytes
-	inc edi
-	dec ecx      ;decrement the count(string length)
-	jz FOUND   ;if count=0 the strings are same
-        jmp check  ;else jump to ceck next byte
-
-    FOUND:
-    lea   edx, msgNumFound 
-	call  writeString
-	call	CrLf
-    jmp  done
-    
-    notFOUND:
-    lea   edx, msgNumNotFound 
-	call  writeString
-	call	CrLf
-    jmp  done
-   
     done:
-    ret
+		call	CrLf
+		ret	
+
+
+
 search ENDP
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -244,7 +300,13 @@ main PROC
 
 
 
-start:
+
+
+
+
+
+
+    start:
     
     lea edx, mes1
     call WriteString
@@ -254,16 +316,26 @@ start:
     je add1
     cmp eax, 2
     je print2
+    cmp eax, 3
+    je delete2
     cmp eax, 4
     je search2
-    cmp eax, 6
+    cmp eax, 5
+
+
+
     je stop
     jmp next                    ; This was missing in the OP
 
 
-
+    
 add1:
     call readin
+    jmp next                    ; Just a better name than in the OP
+
+
+delete2:
+    call delete
     jmp next                    ; Just a better name than in the OP
 
 
@@ -277,6 +349,13 @@ print2:
 
 
 search2:
+    mov cx,15
+    mov edx , offset contacts
+
+myloop:
+ 
+    mov contactsPtr , offset contacts
+
     call search
     jmp next                    ; Just a better name than in the OP
 
