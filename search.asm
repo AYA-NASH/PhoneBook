@@ -16,12 +16,13 @@ includelib y:\masm32\lib\user32.lib
     mesToTakeName byte "Enter Your Name : ",0
     mesToMaxNumber byte "Max Numbers !!!",0
     mesToTakeNumber byte "Enter Your Number : ",0
-    msgMoreNumber byte "More Numbers? (y) or ??",0
+    msgMoreNumber byte "More Numbers? (y) or (n)",0
     maxNum byte 0,0
     indexWeAt DWORD 0,0
+    indexWeAt2 DWORD 0,0
 
     zeros  byte "-",0
-    eqaa byte "++",0
+    eqaa byte "+",0
     searchInput dword 0,0
     nameSize byte ?
     contacts word 1000 DUP(?);array of conects
@@ -83,8 +84,8 @@ readin PROC
  filling: 
              mov edx, arrayptr           ; Argument for ReadString: Pointer to memory
             mov ecx, 1                 ; Argument for ReadString: maximal number of 
-            mov ecx, 15                 ; Argument for ReadString: maximal number of chars
-            mov al , zeros
+            ;mov ecx, 15                 ; Argument for ReadString: maximal number of chars
+            mov al , zeros ; zero => "-"
             mov  [edx], al
             inc     maxNum
             lea edx, [edx+1+1]        ; EDX += EAX + 1
@@ -93,6 +94,7 @@ readin PROC
              jne    filling
              jmp done
 maxNumFunc:
+	        call	CrLf
             lea   edx, mesToMaxNumber
 	        call  writeString
 	        call	CrLf
@@ -137,6 +139,7 @@ print_name ENDP
 
 
 print PROC
+mov indexWeAt , 0
     mov index,0
     lea edx, array              ; Points to the first string
     L1:
@@ -151,6 +154,8 @@ print PROC
     je name_print
     jg number_print
     name_print:
+    cmp byte ptr [edx] , '='
+    je scan_to_remove
     mov eax , edx
     lea edx,yourName
     call writeString
@@ -159,7 +164,9 @@ print PROC
     call Crlf  
     jmp scan_for_null
     number_print:
-     mov eax , edx
+     cmp byte ptr [edx] , '='
+    je scan_to_remove
+    mov eax , edx
     lea edx,number
     call writeString
     mov edx,eax
@@ -178,16 +185,33 @@ print PROC
     mov index,0
     jmp L1
 
+scan_to_remove:
+       inc indexWeAt
+       jmp scan_for_null
+
+
     done:
     ret
 print ENDP
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
 search PROC
         mov check,0
         mov index , 0
-        lea   edx, mesToTakeNumber
+        lea   edx, mesToTakeName
 	    call  writeString
 	    call	CrLf
         mov edx, contactsPtr           ; Argument for ReadString: Pointer to memory
@@ -200,42 +224,286 @@ search PROC
         lea edx, [edx+eax+1]        ; EDX += EAX + 1
         mov contactsPtr, edx           ; New pointer, points to the byte where the next string should begin
         mov indexWeAt,0
+        mov indexWeAt2,0
         mov index,0
-
-        compare_string:
+        xor edx ,edx
+        xor ebx ,ebx
+        xor ecx ,ecx
+        mov ecx , edx
+        lea edx , yourName
+        call writestring
+        mov edx , ecx
             mov eax , offset array
-            mov ebx , offset contacts
-    call	CrLf
-            add eax , indexWeAt
-            add ebx, indexWeAt
-            mov ecx , [ebx]
-            cmp [eax],ecx
+            ;dec eax
+            mov edi , offset contacts
+        compare_string:
+            mov ebx , edi
+            ;call	CrLf
+            mov cl , BYTE PTR [ebx]
+            cmp BYTE PTR [eax], cl       ; Terminating null?
+            je okay_print
+            mov index , 0
+            cmp eax, arrayptr           
+            jae done                    
+            scan_for_null:
+            mov edi , offset contacts
+            inc eax                     ; Pointer to next string
+            cmp BYTE PTR [eax], 0       ; Terminating null?
+            jne scan_for_null           ; no -> next character
+            inc eax                     ; Pointer to next string
+            jmp compare_string
+            okay_print:
             inc index
-            inc indexWeAt
-            cmp index,1
-            jbe compare_string
-            dec ebx
-            mov edx , ebx
+            mov ecx , esi
+            cmp index , cl
+            jne double_check
+            sub eax , ecx
+            inc eax
+            xor edx , edx
+            mov edx , eax                ;=========>>>>>> edx holds Name Index in the array
             call writestring
-            add_index:
-            mov ebx,offset array
-            add ebx,indexWeAt
+
+            ;inc eax                     ; Pointer to next string
             call	CrLf
-            add ebx , esi
-            inc ebx
-            mov ecx , ebx
-            mov edx,ebx
-            call writestring
+            
+        mov ecx , edx
+        lea edx , number
+        call writestring
+        mov edx , ecx
+           scan_for_null2:
+            inc edx                     ; Pointer to next string
+            cmp BYTE PTR [edx], 0       ; Terminating null?
+            jne scan_for_null2           ; no -> next character
+            inc edx                     ; Pointer to next string
+            call writestring		 ;=========>>>>>> edx holds first Number Index in the array
+            		call	CrLf
 
+        mov ecx , edx
+        lea edx , number
+        call writestring
+        mov edx , ecx
+           scan_for_null3:
+            inc edx                     ; Pointer to next string
+            cmp BYTE PTR [edx], 0       ; Terminating null?
+            jne scan_for_null3           ; no -> next character
+            inc edx                     ; Pointer to next string
+            call writestring		;=========>>>>>> edx holds second Number Index in the array
+            		call	CrLf
 
+        mov ecx , edx
+        lea edx , number
+        call writestring
+        mov edx , ecx
+           scan_for_null4:
+            inc edx                     ; Pointer to next string
+            cmp BYTE PTR [edx], 0       ; Terminating null?
+            jne scan_for_null4           ; no -> next character
+            inc edx                     ; Pointer to next string
+            call writestring		;=========>>>>>> edx holds third Number Index in the array
+            jmp done
+
+        double_check:
+            inc edi
+            inc eax
+            jmp compare_string
 
     done:
 		call	CrLf
-		exit	
+		ret	
 
 
 
 search ENDP
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+delete PROC
+        mov check,0
+        mov index , 0
+        lea   edx, mesToTakeName
+	    call  writeString
+	    call	CrLf
+        mov edx, contactsPtr           ; Argument for ReadString: Pointer to memory
+        mov ecx, 15                 ; Argument for ReadString: maximal number of chars
+        call ReadString             ; Doesn't change EDX
+        inc     maxNum
+        test eax, eax               ; EAX == 0 (got no string)
+        jz done                     ; Yes: don't store a new arrayptr
+        mov esi,eax
+        lea edx, [edx+eax+1]        ; EDX += EAX + 1
+        mov contactsPtr, edx           ; New pointer, points to the byte where the next string should begin
+        mov indexWeAt,0
+        mov indexWeAt2,0
+        mov index,0
+        xor edx ,edx
+        xor ebx ,ebx
+        xor ecx ,ecx
+        mov ecx , edx
+        mov edx , ecx
+            mov eax , offset array
+            ;dec eax
+            mov edi , offset contacts
+        compare_string:
+            mov ebx , edi
+            ;call	CrLf
+            mov cl , BYTE PTR [ebx]
+            cmp BYTE PTR [eax], cl       ; Terminating null?
+            je okay_print
+            mov index , 0
+            cmp eax, arrayptr           
+            jae done                    
+            scan_for_null:
+            mov edi , offset contacts
+            inc eax                     ; Pointer to next string
+            cmp BYTE PTR [eax], 0       ; Terminating null?
+            jne scan_for_null           ; no -> next character
+            inc eax                     ; Pointer to next string
+            jmp compare_string
+            okay_print:
+            inc index
+            mov ecx , esi
+            cmp index , cl
+            jne double_check
+            sub eax , ecx
+            inc eax
+            xor edx , edx
+            mov edx , eax ;index of the name
+            call writestring            ;index of the name
+            call CrLf
+            jmp remove_number
+
+
+
+            ;inc eax                     ; Pointer to next string
+            call	CrLf
+            
+        mov ecx , edx
+        lea edx , number
+        call writestring
+        mov edx , ecx
+           scan_for_null2:
+            inc edx                     ; Pointer to next string
+            cmp BYTE PTR [edx], 0       ; Terminating null?
+            jne scan_for_null2           ; no -> next character
+        next_item_to_remove2:
+           inc edx                     ; Pointer to next string
+           call writestring            ;index of the Number 1
+
+           call	CrLf
+                       jmp remove_number2
+
+        mov ecx , edx
+        lea edx , number
+        call writestring
+        mov edx , ecx
+           scan_for_null3:
+            inc edx                     ; Pointer to next string
+            cmp BYTE PTR [edx], 0       ; Terminating null?
+            jne scan_for_null3           ; no -> next character
+          next_item_to_remove3:
+          inc edx                     ; Pointer to next string
+            call writestring            ;index of the Number 2
+            call	CrLf
+                        jmp remove_number3
+
+
+        mov ecx , edx
+        lea edx , number
+        call writestring
+        mov edx , ecx
+           scan_for_null4:
+            inc edx                     ; Pointer to next string
+            cmp BYTE PTR [edx], 0       ; Terminating null?
+            jne scan_for_null4           ; no -> next character
+            next_item_to_remove4:
+            inc edx                     ; Pointer to next string
+            call writestring            ;index of the Number 3
+            jmp remove_number4
+
+            jmp done
+
+        double_check:
+            inc edi
+            inc eax
+            jmp compare_string
+            
+            remove_number:
+            cmp BYTE PTR [edx], 0       ; Terminating null?
+            jne lets_remove           ; no -> next character
+            jmp next_item_to_remove2
+    
+    lets_remove:
+             mov cl , '='
+             mov [edx] , cl
+             inc edx                     ; Pointer to next string
+             jmp remove_number
+        
+            remove_number2:
+            cmp BYTE PTR [edx], 0       ; Terminating null?
+            jne lets_remove           ; no -> next character
+            jmp next_item_to_remove3
+    
+    lets_remove2:
+             mov cl , '='
+             mov [edx] , cl
+             inc edx                     ; Pointer to next string
+             jmp remove_number2
+
+             
+            remove_number3:
+            cmp BYTE PTR [edx], 0       ; Terminating null?
+            jne lets_remove3           ; no -> next character
+            jmp next_item_to_remove4
+    
+    lets_remove3:
+             mov cl , '='
+             mov [edx] , cl
+             inc edx                     ; Pointer to next string
+             jmp remove_number3   
+
+
+            remove_number4:
+            cmp BYTE PTR [edx], 0       ; Terminating null?
+            jne lets_remove4           ; no -> next character
+            jmp done
+    
+    lets_remove4:
+             mov cl , '='
+             mov [edx] , cl
+             inc edx                     ; Pointer to next string
+             jmp remove_number4
+        
+        
+    done:
+		ret	
+
+
+
+delete ENDP
 
 
 
@@ -256,7 +524,13 @@ main PROC
 
 
 
-start:
+
+
+
+
+
+
+    start:
     
     lea edx, mes1
     call WriteString
@@ -266,16 +540,26 @@ start:
     je add1
     cmp eax, 2
     je print2
+    cmp eax, 3
+    je delete2
     cmp eax, 4
     je search2
     cmp eax, 5
+
+
+
     je stop
     jmp next                    ; This was missing in the OP
 
 
-
+    
 add1:
     call readin
+    jmp next                    ; Just a better name than in the OP
+
+
+delete2:
+    call delete
     jmp next                    ; Just a better name than in the OP
 
 
@@ -289,6 +573,13 @@ print2:
 
 
 search2:
+    mov cx,15
+    mov edx , offset contacts
+
+myloop:
+ 
+    mov contactsPtr , offset contacts
+
     call search
     jmp next                    ; Just a better name than in the OP
 
