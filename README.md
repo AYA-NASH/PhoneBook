@@ -66,7 +66,7 @@ if the name exist, then it will be deleted from the contacts list:
 ![remove success](screenshots/removeExistingName.jpeg)
 
 if the target name doesn't match any of the contacts, this will return NULL, in both cases, user is re-asked to select another option.
-![remove Fails](screenshots/removeAnInvalidName.jpeg)
+![remove Fails](screenshots/removeAnInvalidName.PNG)
 
 
 ### 4 - Search
