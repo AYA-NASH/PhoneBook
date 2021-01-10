@@ -238,6 +238,17 @@ scan_for_null2:
             cmp BYTE PTR [edx], 0       ; Terminating null?
             jne lets_remove           ; no -> next character
             jmp next_item_to_remove2
+	    
+lets_remove:
+             mov cl , '='
+             mov [edx] , cl
+             inc edx                     ; Pointer to next string
+             jmp remove_number
+        
+remove_number2:
+            cmp BYTE PTR [edx], 0       ; Terminating null?
+            jne lets_remove           ; no -> next character
+            jmp next_item_to_remove3
 	
 	
   done:
