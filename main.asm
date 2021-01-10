@@ -29,14 +29,13 @@ includelib y:\masm32\lib\user32.lib
     index byte ?
 
     
-buffer BYTE 21 DUP(0)          ; input buffer
-byteCount DWORD ?              ; holds counter
+    buffer BYTE 21 DUP(0)          ; input buffer
+    byteCount DWORD ?              ; holds counter
       
 
 
 
 .CODE
-
 
 readin PROC
     mov    maxNum , 0
@@ -110,10 +109,6 @@ zero_name :
     done:
         ret
 readin ENDP
-
-
-
-
 
 delete PROC
         mov check,0
@@ -273,10 +268,6 @@ lets_remove4:
       ret	
 delete ENDP
 
-
-
-
-
 print PROC
 mov indexWeAt , 0
     mov index,0
@@ -332,10 +323,6 @@ scan_to_remove:
     done:
     ret
 print ENDP
-
-
-
-
 
 search PROC
         mov check,0
@@ -443,19 +430,6 @@ search PROC
 
 
 search ENDP
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 main PROC
 
