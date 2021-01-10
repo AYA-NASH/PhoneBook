@@ -70,16 +70,16 @@ if the name exist, then it will be deleted from the contacts list:
 
 if the target name doesn't match any of the contacts, a `Not Found` message will be displayed, in both cases, later on the user will be prompted to choose the next action to take.
 ### 4 - Search
-The search operation is designed to search by a name , the program searches all the contacts for that name , if name is found in the contacts , then that name and all related numbers will be displayed , if not found a message with "Not Found " is displayed.
+The search operation is designed to search by a name , the program searches all the contacts for that name , if name is found in the contacts , then that name and all related numbers will be displayed , if not found the program ask to enter another name .
 So, to perform search operation:
 - type number 4.
 - "Enter Name : " message is displayed 
 the output will be either the required name with all related numbers 
 
-![discre](screenshots/searchAnExitingName.jpeg)
+![discre](screenshots/SearchAnExistingName.jpeg)
 
  or
- a "Not Found " message (if the input name was a number or not existing name )
+ ask for entering the name again  (if the input name was a number or not existing name )
 
 ![discre](screenshots/searchAnInvalidName.jpeg)
 
