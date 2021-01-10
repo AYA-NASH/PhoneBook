@@ -49,18 +49,15 @@ First when you run the project we get the massage on screen to choose the number
 	    ```
 
 
-
-
-
 ![add massage](https://github.com/AYA-NASH/PhoneBook/blob/main/screenshots/add.PNG)
     
-  
-  
     
 ###  2 - Display all Numbers.
  The user should enter `2` in order to choose the display option, as a result all his contacts will be displayed, after that the user will be prompted again for the next action to choose,also `-` sign means that there's a empty space that the user can add a number to that contact.
  
 ![display all numbers](screenshots/display.jpeg)
+
+
 
 ### 3 - Remove 
 In order to delete a specific contact, the user should input `3` to choose the remove option, after that the user is prompted again to type the name he wants to delete, then the program will search the contacts for the target name
@@ -68,7 +65,10 @@ In order to delete a specific contact, the user should input `3` to choose the r
 if the name exist, then it will be deleted from the contacts list:
 ![remove success](screenshots/removeExistingName.jpeg)
 
-if the target name doesn't match any of the contacts, a `Not Found` message will be displayed, in both cases, later on the user will be prompted to choose the next action to take.
+if the target name doesn't match any of the contacts, this will return NULL, in both cases, user is re-asked to select another option.
+![remove Fails](screenshots/removeAnInvalidName.jpeg)
+
+
 ### 4 - Search
 The search operation is designed to search by a name , the program searches all the contacts for that name , if name is found in the contacts , then that name and all related numbers will be displayed , if not found the program ask to enter another name .
 So, to perform search operation:
