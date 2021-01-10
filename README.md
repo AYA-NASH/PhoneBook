@@ -58,7 +58,7 @@ First when you run the project we get the massage on screen to choose the number
   
    
 ###  2 - Display all Numbers.
- The user should enter `2` in order to choose the display option, as a result all his contacts will be displayed, after that the user will be prompted again for the next action to choose.
+ The user should enter `2` in order to choose the display option, as a result all his contacts will be displayed, after that the user will be prompted again for the next action to choose ,also `-` sign means that there's a empty space that the user can add a number to it.
  
 ![display all numbers](screenshots/display.jpeg)
 
