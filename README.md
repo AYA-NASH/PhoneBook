@@ -58,7 +58,7 @@ First when you run the project we get the massage on screen to choose the number
   
    
 ###  2 - Display all Numbers.
- The user should enter `2` in order to choose the display option, as a result all his contacts will be displayed, after that the user will be prompted again for the next action to choose ,also `-` sign means that there's a empty space that the user can add a number to it.
+ The user should enter `2` in order to choose the display option, as a result all his contacts will be displayed, after that the user will be prompted again for the next action to choose.
  
 ![display all numbers](screenshots/display.jpeg)
 
@@ -68,4 +68,19 @@ In order to delete a specific contact, the user should input `3` to choose the r
 if the name exist, then it will be deleted from the contacts list:
 ![remove success](screenshots/removeExistingName.jpeg)
 
-if the target name doesn't match any of the contacts, a NULL value will be displayed, in both cases, later on the user will be prompted to choose the next action to take.
+if the target name doesn't match any of the contacts, a `Not Found` message will be displayed, in both cases, later on the user will be prompted to choose the next action to take.
+### 4 - Search
+The search operation is designed to search by a name , the program searches all the contacts for that name , if name is found in the contacts , then that name and all related numbers will be displayed , if not found a message with "Not Found " is displayed.
+So, to perform search operation:
+- type number 4.
+- "Enter Name : " message is displayed 
+the output will be either the required name with all related numbers 
+
+![discre](screenshots/searchAnExitingName.jpeg)
+
+ or
+ a "Not Found " message (if the input name was a number or not existing name )
+
+![discre](screenshots/searchAnInvalidName.jpeg)
+
+- user is re-asked to select another option
