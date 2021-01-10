@@ -68,4 +68,4 @@ In order to delete a specific contact, the user should input `3` to choose the r
 if the name exist, then it will be deleted from the contacts list:
 ![remove success](screenshots/removeExistingName.jpeg)
 
-if the target name doesn't match any of the contacts, a `Not Found` message will be displayed, in both cases, later on the user will be prompted to choose the next action to take.
+if the target name doesn't match any of the contacts, a NULL value will be displayed, in both cases, later on the user will be prompted to choose the next action to take.
