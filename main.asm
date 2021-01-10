@@ -8,7 +8,7 @@ includelib y:\masm32\lib\user32.lib
        aName BYTE 51 DUP (?)
     arrayptr    DWORD OFFSET array
     array       BYTE 4096 DUP (?)
-    mes1        BYTE 10, "1-add contact. 2-display all numbers. 3-remove contact. 4-search for contact. 5-add number. 6-quite.", 0
+    mes1        BYTE 10, "1-add contact. 2-display all numbers. 3-remove contact. 4-search for contact. 5-quit.", 0
     check byte 0,0
     yourName  byte "Name :  ",0
     number byte "Number :  ",0
@@ -474,8 +474,6 @@ main PROC
     cmp eax, 4
     je search2
     cmp eax, 5
-    je add2
-    cmp eax, 7
     je stop
     jmp next                    ; This was missing in the OP
 
@@ -510,10 +508,6 @@ myloop:
 
     call search
     jmp next                    ; Just a better name than in the OP
-
-add2:
-   call addNum
-   jmp next
 
 next:                           ; Just a better name than in the OP
     jmp start
