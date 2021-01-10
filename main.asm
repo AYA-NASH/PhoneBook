@@ -190,12 +190,39 @@ compare_string:
         lea edx , number
         call writestring
         mov edx , ecx
-
+	
+scan_for_null2:
+        inc edx                     ; Pointer to next string
+        cmp BYTE PTR [edx], 0       ; Terminating null?
+        jne scan_for_null2           ; no -> next character
+        next_item_to_remove2:
+        inc edx                     ; Pointer to next string
+        call writestring            ;index of the Number 1
+        call	CrLf
+        jmp remove_number2
+        mov ecx , edx
+        lea edx , number
+        call writestring
+        mov edx , ecx
+ scan_for_null3:
+        inc edx                     ; Pointer to next string
+        cmp BYTE PTR [edx], 0       ; Terminating null?
+        jne scan_for_null3           ; no -> next character
+ next_item_to_remove3:
+        inc edx                     ; Pointer to next string
+        call writestring            ;index of the Number 2
+        call	CrLf
+        jmp remove_number3
+        mov ecx , edx
+        lea edx , number
+        call writestring
+        mov edx , ecx
+	
+	
+	
+	
   done:
-		ret	
-
-
-
+      ret	
 delete ENDP
 
 
@@ -268,16 +295,6 @@ scan_to_remove:
     done:
     ret
 print ENDP
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -403,37 +420,7 @@ search ENDP
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 main PROC
-
-    ;mov edx, offset fileName
-    ;call createoutputfile
-    ;mov al , mesToTakeNumber
-    ;call Writetofile
-
-    ;cmp [mes1] , 1
-    ;jg add1
-    ;jl stop
-
-
-
-
-
-
-
-
 
     start:
     
