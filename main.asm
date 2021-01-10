@@ -218,7 +218,26 @@ scan_for_null2:
         call writestring
         mov edx , ecx
 	
-	
+	scan_for_null4:
+            inc edx                     ; Pointer to next string
+            cmp BYTE PTR [edx], 0       ; Terminating null?
+            jne scan_for_null4           ; no -> next character
+            next_item_to_remove4:
+            inc edx                     ; Pointer to next string
+            call writestring            ;index of the Number 3
+            jmp remove_number4
+
+            jmp done
+
+        double_check:
+            inc edi
+            inc eax
+            jmp compare_string
+            
+            remove_number:
+            cmp BYTE PTR [edx], 0       ; Terminating null?
+            jne lets_remove           ; no -> next character
+            jmp next_item_to_remove2
 	
 	
   done:
