@@ -20,7 +20,7 @@ includelib y:\masm32\lib\user32.lib
 
 ## usage
 First when you run the project we get the massage on screen to choose the number of operation you need to do  
-![first massage](https://github.com/AYA-NASH/PhoneBook/blob/main/intel-8086/first%20massage0.PNG?raw=true)
+![first massage](https://github.com/AYA-NASH/PhoneBook/blob/main/screenshots/first%20massage0.PNG?raw=true)
 
    #### Add
    Allow to user to Enter its Name (the max contain 20 character )
@@ -51,7 +51,7 @@ First when you run the project we get the massage on screen to choose the number
 
 
 
-![add massage](https://github.com/AYA-NASH/PhoneBook/blob/main/intel-8086/add.PNG)
+![add massage](https://github.com/AYA-NASH/PhoneBook/blob/main/screenshots/add.PNG)
     
   
   
