@@ -8,9 +8,8 @@ includelib y:\masm32\lib\user32.lib
        aName BYTE 51 DUP (?)
     arrayptr    DWORD OFFSET array
     array       BYTE 4096 DUP (?)
-    mes1        BYTE 10, "1-add number 2-display all numbers 3-remove a number 4-search for a number 5-quit", 0
+    mes1        BYTE 10, "1-add contact. 2-display all numbers. 3-remove contact. 4-search for contact. 5-add number. 6-remove number. 7-quit.", 0
     check byte 0,0
-    ;mes1        BYTE 10, "press 1 to add an element, 2 to print, 3 to quit    ", 0
     yourName  byte "Name :  ",0
     number byte "Number :  ",0
     mesToTakeName byte "Enter Your Name : ",0
@@ -111,15 +110,6 @@ zero_name :
     done:
         ret
 readin ENDP
-
-
-
-
-
-
-
-
-
 
 
 
@@ -260,22 +250,28 @@ remove_number3:
             cmp BYTE PTR [edx], 0       ; Terminating null?
             jne lets_remove3           ; no -> next character
             jmp next_item_to_remove4
+	    
+lets_remove3:
+             mov cl , '='
+             mov [edx] , cl
+             inc edx                     ; Pointer to next string
+             jmp remove_number3   
+
+ remove_number4:
+            cmp BYTE PTR [edx], 0       ; Terminating null?
+            jne lets_remove4           ; no -> next character
+            jmp done
+    
+lets_remove4:
+             mov cl , '='
+             mov [edx] , cl
+             inc edx                     ; Pointer to next string
+             jmp remove_number4
 	
 	
   done:
       ret	
 delete ENDP
-
-
-
-
-    
-
-print_name PROC
-    
-    done:
-    ret
-print_name ENDP
 
 
 
@@ -478,9 +474,8 @@ main PROC
     cmp eax, 4
     je search2
     cmp eax, 5
-
-
-
+    je add2
+    cmp eax, 7
     je stop
     jmp next                    ; This was missing in the OP
 
@@ -516,7 +511,9 @@ myloop:
     call search
     jmp next                    ; Just a better name than in the OP
 
-
+add2:
+   call addNum
+   jmp next
 
 next:                           ; Just a better name than in the OP
     jmp start
