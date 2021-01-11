@@ -411,6 +411,7 @@ addNum PROC
         mov indexWeAt2 , 0
         mov ebx , placeholderPtr
         sub ebx , offset placeholder
+        inc ebx
     lets_fill_again:
         inc indexWeAt2
         mov cl , byte ptr [esi]
