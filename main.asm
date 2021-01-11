@@ -269,6 +269,7 @@ search ENDP
 
 
 addNum PROC
+mov contactsPtr,offset contacts
     ;search for name in array
             lea   edx, mesToTakeName
 	    call  writeString
@@ -425,6 +426,8 @@ addNum PROC
 
 
     done:
+    mov edx , offset addNumber
+    call writestring
 	call	CrLf
 	ret	
 addNum ENDP
@@ -434,6 +437,8 @@ addNum ENDP
 
 
 delete PROC
+mov contactsPtr,offset contacts
+
         mov check,0
         mov index , 0
         lea   edx, mesToTakeName
