@@ -58,7 +58,7 @@ First when you run the project we get the massage on screen to choose the number
 In order to delete a specific contact, the user should input 3 to choose the remove option, after that the user is prompted again to type the name he wants to delete, then the program will search the contacts for the target name
 
 if the name exist, then it will be deleted from the contacts list: remove success
-![remove success](screenshots/removeExistingName.jpeg)
+![remove success](screenshots/removeExistingName.PNG)
 
 if the target name doesn't match any of the contacts, this will return NULL, in both cases, user is re-asked to select another option.
 
@@ -74,7 +74,7 @@ type number 4.
 
 or ask for entering the name again (if the input name was a number or not existing name )
 
-![discre](screenshots/searchAnInvalidName)
+![discre](screenshots/searchAnInvalidName.PNG)
 
 user is re-asked to select another option 
 
@@ -85,7 +85,7 @@ So, that operation is done as following:
 - "Enter Name" is displayed to prompt for name
 - "Enter Number : " is displayed to prompt for number 
 
-![discre](screenshots/addNewNumberExistingName.PNGadd.PNG)
+![discre](screenshots/addNewNumberExistingName.PNG)
 
 if not not existing name
 
