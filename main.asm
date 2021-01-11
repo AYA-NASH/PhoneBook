@@ -433,8 +433,6 @@ addNum ENDP
 
 
 
-
-
 delete PROC
         mov check,0
         mov index , 0
