@@ -65,7 +65,7 @@ if the target name doesn't match any of the contacts, this will return NULL, in 
 ![remove Fails](screenshots/removeAnInvalidName.PNG)
 
 ### 4 - Search
-The search operation is designed to search by a name , the program searches all the contacts for that name , if name is found in the contacts , then that name and all related numbers will be displayed , if not found the program ask to enter another name . 
+The search operation is designed to search by a name , the program searches all the contacts for that name , if name is found in the contacts , then that name and all related numbers will be displayed , if not found this will return `NULL`, in both cases, user is re-asked to select another option.. 
 So, to perform search operation:
 type number 4.
 "Enter Name : " message is displayed the output will be either the required name with all related numbers
