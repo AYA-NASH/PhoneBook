@@ -8,7 +8,7 @@ includelib y:\masm32\lib\user32.lib
     aName BYTE 51 DUP (?)
     arrayptr    DWORD OFFSET array
     array       BYTE 4096 DUP (?)
-     mes1        BYTE 10, "1-add contact. 2-display all numbers. 3-remove contact. 4-search for contact. 5-add a numer. 6-quit.", 0
+     mes1        BYTE 10, "1-add contact. 2-display all numbers. 3-remove contact. 4-search for contact. 5-add new number. 6-quit.", 0
     check byte 0,0
     ;mes1        BYTE 10, "press 1 to add an element, 2 to print, 3 to quit    ", 0
     yourName  byte "Name :  ",0
