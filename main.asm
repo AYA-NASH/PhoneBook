@@ -190,10 +190,6 @@ search PROC
         xor edx ,edx
         xor ebx ,ebx
         xor ecx ,ecx
-        mov ecx , edx
-        lea edx , yourName
-        call writestring
-        mov edx , ecx
         mov eax , offset array
         mov edi , offset contacts
    compare_string:
@@ -220,6 +216,10 @@ search PROC
             inc eax
             xor edx , edx
             mov edx , eax                ;=========>>>>>> edx holds Name Index in the array
+        mov ecx , edx
+        lea edx , yourName
+        call writestring
+        mov edx , ecx
             call writestring
             call	CrLf        
             mov ecx , edx
