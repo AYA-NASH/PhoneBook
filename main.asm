@@ -429,30 +429,36 @@ addNum PROC
 addNum ENDP
 
 
+
+
+
+
+
 delete PROC
-            mov check,0
-            mov index , 0
-            lea   edx, mesToTakeName
+        mov check,0
+        mov index , 0
+        lea   edx, mesToTakeName
 	    call  writeString
 	    call	CrLf
-            mov edx, contactsPtr           ; Argument for ReadString: Pointer to memory
-            mov ecx, 15                 ; Argument for ReadString: maximal number of chars
-            call ReadString             ; Doesn't change EDX
-            inc     maxNum
-            test eax, eax               ; EAX == 0 (got no string)
-            jz done                     ; Yes: don't store a new arrayptr
-            mov esi,eax
-            lea edx, [edx+eax+1]        ; EDX += EAX + 1
-            mov contactsPtr, edx           ; New pointer, points to the byte where the next string should begin
-            mov indexWeAt,0
-            mov indexWeAt2,0
-            mov index,0
-            xor edx ,edx
-            xor ebx ,ebx
-            xor ecx ,ecx
-            mov ecx , edx
-            mov edx , ecx
+        mov edx, contactsPtr           ; Argument for ReadString: Pointer to memory
+        mov ecx, 15                 ; Argument for ReadString: maximal number of chars
+        call ReadString             ; Doesn't change EDX
+        inc     maxNum
+        test eax, eax               ; EAX == 0 (got no string)
+        jz done                     ; Yes: don't store a new arrayptr
+        mov esi,eax
+        lea edx, [edx+eax+1]        ; EDX += EAX + 1
+        mov contactsPtr, edx           ; New pointer, points to the byte where the next string should begin
+        mov indexWeAt,0
+        mov indexWeAt2,0
+        mov index,0
+        xor edx ,edx
+        xor ebx ,ebx
+        xor ecx ,ecx
+        mov ecx , edx
+        mov edx , ecx
             mov eax , offset array
+            ;dec eax
             mov edi , offset contacts
         compare_string:
             mov ebx , edi
@@ -482,45 +488,51 @@ delete PROC
             call writestring            ;index of the name
             call CrLf
             jmp remove_number
-            call CrLf          
-            mov ecx , edx
-            lea edx , number
-            call writestring
-            mov edx , ecx
-        scan_for_null2:
+
+
+
+            ;inc eax                     ; Pointer to next string
+            call	CrLf
+            
+        mov ecx , edx
+        lea edx , number
+        call writestring
+        mov edx , ecx
+           scan_for_null2:
             inc edx                     ; Pointer to next string
             cmp BYTE PTR [edx], 0       ; Terminating null?
             jne scan_for_null2           ; no -> next character
         next_item_to_remove2:
-            inc edx                     ; Pointer to next string
-            call writestring            ;index of the Number 1
-            call CrLf
-            jmp remove_number2
+           inc edx                     ; Pointer to next string
+           call writestring            ;index of the Number 1
 
-             mov ecx , edx
-            lea edx , number
-            call writestring
-            mov edx , ecx
-        scan_for_null3:
+           call	CrLf
+                       jmp remove_number2
+
+        mov ecx , edx
+        lea edx , number
+        call writestring
+        mov edx , ecx
+           scan_for_null3:
             inc edx                     ; Pointer to next string
             cmp BYTE PTR [edx], 0       ; Terminating null?
             jne scan_for_null3           ; no -> next character
-        next_item_to_remove3:
-            inc edx                     ; Pointer to next string
+          next_item_to_remove3:
+          inc edx                     ; Pointer to next string
             call writestring            ;index of the Number 2
             call	CrLf
-            jmp remove_number3
+                        jmp remove_number3
 
 
-            mov ecx , edx
-            lea edx , number
-            call writestring
-            mov edx , ecx
-        scan_for_null4:
+        mov ecx , edx
+        lea edx , number
+        call writestring
+        mov edx , ecx
+           scan_for_null4:
             inc edx                     ; Pointer to next string
             cmp BYTE PTR [edx], 0       ; Terminating null?
             jne scan_for_null4           ; no -> next character
-        next_item_to_remove4:
+            next_item_to_remove4:
             inc edx                     ; Pointer to next string
             call writestring            ;index of the Number 3
             jmp remove_number4
@@ -554,6 +566,7 @@ delete PROC
              inc edx                     ; Pointer to next string
              jmp remove_number2
 
+             
             remove_number3:
             cmp BYTE PTR [edx], 0       ; Terminating null?
             jne lets_remove3           ; no -> next character
@@ -579,11 +592,15 @@ delete PROC
         
         
     done:
-	ret	
+		ret	
 
 
 
 delete ENDP
+
+
+
+
 
 
 
